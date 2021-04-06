@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 
 object ApiConfig {
 
-    private const val BASE_URl = ""
+    private const val BASE_URl = "http://192.168.43.192:8000/api/"
     private val client: Retrofit
         get(){
             val gson = GsonBuilder()

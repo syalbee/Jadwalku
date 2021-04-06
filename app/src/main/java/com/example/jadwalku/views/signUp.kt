@@ -4,7 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.example.jadwalku.R
+import com.example.jadwalku.app.ApiConfig
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class signUp : AppCompatActivity() {
@@ -41,5 +47,22 @@ class signUp : AppCompatActivity() {
             etPasword.requestFocus()
             return
         }
+
+        ApiConfig.instanceRetrofit.register(etNama.text.toString(), etEmail.text.toString(), etPasword.text.toString())
+                .enqueue(object : Callback<ResponseBody>{
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                        val toast = Toast.makeText(applicationContext, "gagal", Toast.LENGTH_SHORT)
+                        toast.show()
+
+                    }
+
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+
+                        val toast = Toast.makeText(applicationContext, "berhasil", Toast.LENGTH_SHORT)
+                        toast.show()
+                    }
+
+                })
     }
 }
