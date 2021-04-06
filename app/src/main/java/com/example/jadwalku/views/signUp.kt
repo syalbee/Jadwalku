@@ -1,5 +1,6 @@
 package com.example.jadwalku.views
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -7,6 +8,7 @@ import android.widget.EditText
 import android.widget.Toast
 import com.example.jadwalku.R
 import com.example.jadwalku.app.ApiConfig
+import com.example.jadwalku.model.ResponModel
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,6 +26,11 @@ class signUp : AppCompatActivity() {
 
         btnSignup.setOnClickListener {
             register()
+        }
+
+        btnLogin.setOnClickListener {
+            val intent = Intent(this, SignIn::class.java)
+            startActivity(intent);
         }
 
 
@@ -49,18 +56,25 @@ class signUp : AppCompatActivity() {
         }
 
         ApiConfig.instanceRetrofit.register(etNama.text.toString(), etEmail.text.toString(), etPasword.text.toString())
-                .enqueue(object : Callback<ResponseBody>{
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                .enqueue(object : Callback<ResponModel>{
 
-                        val toast = Toast.makeText(applicationContext, "gagal", Toast.LENGTH_SHORT)
-                        toast.show()
-
+                    override fun onFailure(call: Call<ResponModel>, t: Throwable) {
+                        Toast.makeText(this@signUp, "gagal", Toast.LENGTH_SHORT).show()
                     }
 
-                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    override fun onResponse(
+                        call: Call<ResponModel>,
+                        response: Response<ResponModel>
+                    ) {
+                        val respon = response.body()!!
 
-                        val toast = Toast.makeText(applicationContext, "berhasil", Toast.LENGTH_SHORT)
-                        toast.show()
+                        if(respon.success == 1){
+                            Toast.makeText(this@signUp, "Welcome " + respon.user.name, Toast.LENGTH_SHORT).show()
+
+                        } else{
+                            Toast.makeText(this@signUp, "Error " + respon.message, Toast.LENGTH_SHORT).show()
+                        }
+
                     }
 
                 })
