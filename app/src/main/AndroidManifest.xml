@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Jadwalku"
         android:usesCleartextTraffic="true">
-        <activity android:name=".views.Home"></activity>
+        <activity android:name=".views.Done"></activity>
+        <activity android:name=".views.Active" />
+        <activity android:name=".views.Home" />
         <activity android:name=".views.SignIn" />
         <activity android:name=".views.signUp" />
         <activity android:name=".MainActivity">

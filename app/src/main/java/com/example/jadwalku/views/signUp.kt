@@ -69,6 +69,10 @@ class signUp : AppCompatActivity() {
                         val respon = response.body()!!
 
                         if(respon.success == 1){
+                            val intent = Intent(this@signUp, Home::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                            startActivity(intent)
+                            finish()
                             Toast.makeText(this@signUp, "Welcome " + respon.user.name, Toast.LENGTH_SHORT).show()
 
                         } else{

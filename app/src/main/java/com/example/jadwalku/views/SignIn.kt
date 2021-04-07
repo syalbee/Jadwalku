@@ -1,5 +1,6 @@
 package com.example.jadwalku.views
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -52,7 +53,7 @@ class SignIn : AppCompatActivity() {
 
                 override fun onFailure(call: Call<ResponModel>, t: Throwable) {
                     pbLogin.visibility = View.GONE
-                    Toast.makeText(this@SignIn, "gagal", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@SignIn, "gagal" + t.message, Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onResponse(
@@ -65,6 +66,10 @@ class SignIn : AppCompatActivity() {
 
                     if(respon.success == 1){
 
+                        val intent = Intent(this@SignIn, Home::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                        finish()
                         Toast.makeText(this@SignIn, "Welcome " + respon.user.name, Toast.LENGTH_SHORT).show()
 
                     } else{
