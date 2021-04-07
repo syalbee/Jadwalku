@@ -10,6 +10,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import com.example.jadwalku.R
 import com.example.jadwalku.app.ApiConfig
+import com.example.jadwalku.helper.sharedPref
 import com.example.jadwalku.model.ResponModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,10 +18,13 @@ import retrofit2.Response
 
 class SignIn : AppCompatActivity() {
 
+    lateinit var s:sharedPref
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
+
+        s = sharedPref(this)
 
         val btnLogin = findViewById<Button>(R.id.btnSignin)
 
@@ -65,7 +69,7 @@ class SignIn : AppCompatActivity() {
                     pbLogin.visibility = View.GONE
 
                     if(respon.success == 1){
-
+                        s.setStatusLogin(true)
                         val intent = Intent(this@SignIn, Home::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)

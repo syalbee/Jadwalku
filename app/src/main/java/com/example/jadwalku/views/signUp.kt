@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.Toast
 import com.example.jadwalku.R
 import com.example.jadwalku.app.ApiConfig
+import com.example.jadwalku.helper.sharedPref
 import com.example.jadwalku.model.ResponModel
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -16,9 +17,14 @@ import retrofit2.Response
 
 
 class signUp : AppCompatActivity() {
+
+    lateinit var s: sharedPref
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
+
+        s= sharedPref(this)
 
         val btnSignup = findViewById<Button>(R.id.btnSignup)
         val btnLogin = findViewById<Button>(R.id.btnLogin)
@@ -69,6 +75,7 @@ class signUp : AppCompatActivity() {
                         val respon = response.body()!!
 
                         if(respon.success == 1){
+                            s.setStatusLogin(true)
                             val intent = Intent(this@signUp, Home::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                             startActivity(intent)
